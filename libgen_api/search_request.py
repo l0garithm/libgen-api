@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+import logging
+
 
 # WHY
 # The SearchRequest module contains all the internal logic for the library.
@@ -9,7 +11,6 @@ from bs4 import BeautifulSoup
 
 # USAGE
 # req = search_request.SearchRequest("[QUERY]", search_type="[title]")
-
 
 class SearchRequest:
 
@@ -59,6 +60,7 @@ class SearchRequest:
         query_parsed = self.check_category()
         if self.search_type.lower() == "title":
             if self.search_category.lower() == "fiction":
+                print("IN HERE")
                 search_url = (
                     f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize}"
                 )
