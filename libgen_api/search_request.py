@@ -118,12 +118,13 @@ class SearchRequest:
 
         raw_data = [
             [
-                [a["href"] for a in td.find_all("a")] if index == (columnCount - 1) or (columnCount - 2) else (
+                [a["href"] for a in td.find_all("a")] if index == (columnCount - 1) or index == (columnCount - 2) else (
                     td.find("a").text if td.find("a") else "".join(td.stripped_strings)
                 )
                 for index, td in enumerate(row.find_all("td"))
             ]
             for row in information_table.find_all("tr")[1:]
+
         ]
 
         if self.search_category == "fiction":
