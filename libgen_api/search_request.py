@@ -92,6 +92,7 @@ class SearchRequest:
         # Table2: Table of data to scrape.
         if self.search_category == "fiction":
             print(soup.find_all("table"))
+            print("TESTING")
             information_table = soup.find_all("table")[0]
         else:
             information_table = soup.find_all("table")[2]
