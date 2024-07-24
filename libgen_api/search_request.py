@@ -62,20 +62,20 @@ class SearchRequest:
             if self.search_category.lower() == "fiction":
                 print("IN HERE")
                 search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize}"
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize()}"
                 )
                 print(search_url)
             elif self.search_category.lower() == "nonfiction":
                 search_url = (
-                    f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize}"
+                    f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize()}"
                 )
         elif self.search_type.lower() == "author":
             if self.search_category.lower() == "fiction":
                 search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors&language={self.search_language.capitalize}"
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors&language={self.search_language.capitalize()}"
                 )
             search_url = (
-                f"https://libgen.is/search.php?req={query_parsed}&column=author&language={self.search_language.capitalize}"
+                f"https://libgen.is/search.php?req={query_parsed}&column=author&language={self.search_language.capitalize()}"
             )
         search_page = requests.get(search_url)
         return search_page
