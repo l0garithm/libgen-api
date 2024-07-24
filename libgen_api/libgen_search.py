@@ -58,6 +58,8 @@ def filter_results(results, filters, exact_match):
     filtered_list = []
     if exact_match:
         for result in results:
+            print(f"Result: {result}")
+            print(filters.items())
             # check whether a candidate result matches the given filters
             if filters.items() <= result.items():
                 filtered_list.append(result)
