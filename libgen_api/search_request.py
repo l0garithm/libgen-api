@@ -91,6 +91,7 @@ class SearchRequest:
         # Libgen results contain 3 tables
         # Table2: Table of data to scrape.
         if self.search_category == "fiction":
+            print(soup.find_all("table"))
             information_table = soup.find_all("table")[0]
         else:
             information_table = soup.find_all("table")[2]
