@@ -33,7 +33,7 @@ class SearchRequest:
     ]
 
     fiction_col_names = [
-        "Author(s)",
+        "Author",
         "Series",
         "Title",
         "Language",
@@ -101,18 +101,32 @@ class SearchRequest:
         # or link text (for the title) should be preserved.
         # Both the book title and mirror links have a "title" attribute,
         # but only the mirror links have it filled.(title vs title="libgen.io")
+        # raw_data = [
+        #     [
+        #         td.a["href"]
+        #         if td.find("a")
+        #         and td.find("a").has_attr("title")
+        #         and td.find("a")["title"] != ""
+        #         else "".join(td.stripped_strings)
+        #         for td in row.find_all("td")
+        #     ]
+        #     for row in information_table.find_all("tr")[
+        #         1:
+        #     ]  # Skip row 0 as it is the headings row
+        # ]
+
+        headerRow = information_table.find("tr")
+        columnCount = len(headerRow.find_all(['th', 'td']))
+        print(columnCount)
+
         raw_data = [
             [
-                td.a["href"]
-                if td.find("a")
-                and td.find("a").has_attr("title")
-                and td.find("a")["title"] != ""
-                else "".join(td.stripped_strings)
-                for td in row.find_all("td")
+                [a["href"] for a in td.find_all("a")] if index == (columnCount - 1) else (
+                    td.find("a").text if td.find("a") else "".join(td.stripped_strings)
+                )
+                for index, td in enumerate(row.find_all("td"))
             ]
-            for row in information_table.find_all("tr")[
-                1:
-            ]  # Skip row 0 as it is the headings row
+            for row in information_table.find_all("tr")[1:]
         ]
 
         if self.search_category == "fiction":
