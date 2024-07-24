@@ -64,6 +64,7 @@ class SearchRequest:
                 search_url = (
                     f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize}"
                 )
+                print(search_url)
             elif self.search_category.lower() == "nonfiction":
                 search_url = (
                     f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize}"
