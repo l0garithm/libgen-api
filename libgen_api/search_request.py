@@ -45,6 +45,7 @@ class SearchRequest:
         self.query = query
         self.search_type = search_type
         self.search_category = search_category
+        self.search_language = search_language
 
         if len(self.query) < 3:
             raise Exception("Query is too short")
@@ -59,19 +60,19 @@ class SearchRequest:
         if self.search_type.lower() == "title":
             if self.search_category.lower() == "fiction":
                 search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title"
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize}"
                 )
             elif self.search_category.lower() == "nonfiction":
                 search_url = (
-                    f"https://libgen.is/search.php?req={query_parsed}&column=title"
+                    f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize}"
                 )
         elif self.search_type.lower() == "author":
             if self.search_category.lower() == "fiction":
                 search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors"
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors&language={self.search_language.capitalize}"
                 )
             search_url = (
-                f"https://libgen.is/search.php?req={query_parsed}&column=author"
+                f"https://libgen.is/search.php?req={query_parsed}&column=author&language={self.search_language.capitalize}"
             )
         search_page = requests.get(search_url)
         return search_page
