@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 
 class SearchRequest:
 
-    col_names = [
+    non_fiction_col_names = [
         "ID",
         "Author",
         "Title",
@@ -31,9 +31,20 @@ class SearchRequest:
         "Edit",
     ]
 
-    def __init__(self, query, search_type="title"):
+    fiction_col_names = [
+        "Author(s)",
+        "Series",
+        "Title",
+        "Language",
+        "File",
+        "Mirrors",
+        " "
+    ]
+
+    def __init__(self, query, search_type="title", search_category="fiction", search_language="English"):
         self.query = query
         self.search_type = search_type
+        self.search_category = search_category
 
         if len(self.query) < 3:
             raise Exception("Query is too short")
@@ -44,17 +55,32 @@ class SearchRequest:
             subheading.decompose()
 
     def get_search_page(self):
-        query_parsed = "%20".join(self.query.split(" "))
+        query_parsed = self.check_category()
         if self.search_type.lower() == "title":
-            search_url = (
-                f"https://libgen.is/search.php?req={query_parsed}&column=title"
-            )
+            if self.search_category.lower() == "fiction":
+                search_url = (
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title"
+                )
+            elif self.search_category.lower() == "nonfiction":
+                search_url = (
+                    f"https://libgen.is/search.php?req={query_parsed}&column=title"
+                )
         elif self.search_type.lower() == "author":
+            if self.search_category.lower() == "fiction":
+                search_url = (
+                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors"
+                )
             search_url = (
                 f"https://libgen.is/search.php?req={query_parsed}&column=author"
             )
         search_page = requests.get(search_url)
         return search_page
+    
+    def check_category(self):
+        if self.search_category == "fiction":
+            return "+".join(self.query.split(" "))
+        else:
+            return "%20".join(self.query.split(" "))
 
     def aggregate_request_data(self):
         search_page = self.get_search_page()
@@ -63,7 +89,10 @@ class SearchRequest:
 
         # Libgen results contain 3 tables
         # Table2: Table of data to scrape.
-        information_table = soup.find_all("table")[2]
+        if self.search_category == "fiction":
+            information_table = soup.find_all("table")[0]
+        else:
+            information_table = soup.find_all("table")[2]
 
         # Determines whether the link url (for the mirror)
         # or link text (for the title) should be preserved.
