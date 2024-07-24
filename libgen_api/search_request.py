@@ -24,8 +24,7 @@ class SearchRequest:
         "Language",
         "Size",
         "Extension",
-        "Mirror_1",
-        "Mirror_2",
+        "Mirrors",
         "Edit",
     ]
 
