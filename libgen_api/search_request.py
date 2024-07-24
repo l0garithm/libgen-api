@@ -112,5 +112,8 @@ class SearchRequest:
             ]  # Skip row 0 as it is the headings row
         ]
 
-        output_data = [dict(zip(self.col_names, row)) for row in raw_data]
+        if self.search_category == "fiction":
+            output_data = [dict(zip(self.fiction_col_names, row)) for row in raw_data]
+        else:
+            output_data = [dict(zip(self.col_names, row)) for row in raw_data]
         return output_data
