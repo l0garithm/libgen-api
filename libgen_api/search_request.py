@@ -14,7 +14,7 @@ import logging
 
 class SearchRequest:
 
-    non_fiction_col_names = [
+    nonfiction_col_names = [
         "ID",
         "Author",
         "Title",
@@ -118,5 +118,5 @@ class SearchRequest:
         if self.search_category == "fiction":
             output_data = [dict(zip(self.fiction_col_names, row)) for row in raw_data]
         else:
-            output_data = [dict(zip(self.col_names, row)) for row in raw_data]
+            output_data = [dict(zip(self.nonfiction_col_names, row)) for row in raw_data]
         return output_data
