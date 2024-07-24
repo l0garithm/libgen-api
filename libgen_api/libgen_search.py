@@ -34,7 +34,7 @@ class LibgenSearch:
         return filtered_results
 
     def resolve_download_links(self, item):
-        mirror_1 = item["Mirror_1"]
+        mirror_1 = item["1"]
         page = requests.get(mirror_1)
         soup = BeautifulSoup(page.text, "html.parser")
         links = soup.find_all("a", string=MIRROR_SOURCES)
