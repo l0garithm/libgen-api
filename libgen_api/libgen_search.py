@@ -1,16 +1,13 @@
 from .search_request import SearchRequest
 import requests
 from bs4 import BeautifulSoup
-import logging
 
 MIRROR_SOURCES = ["GET", "Cloudflare", "IPFS.io", "Infura"]
 
-logging.basicConfig(level=logging.DEBUG)
 class LibgenSearch:
     def __init__(self, search_category="fiction", search_language="english"):
         self.search_category = search_category.lower()
         self.search_language = search_language.lower()
-        logging.debug(f"Search Cat: {self.search_category}")
 
     def search_title(self, query):
         search_request = SearchRequest(query, search_type="title", search_category=self.search_category, search_language=self.search_language)
