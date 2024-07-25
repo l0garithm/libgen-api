@@ -38,9 +38,8 @@ class SearchRequest:
         " "
     ]
 
-    def __init__(self, query, search_type="title", search_category="fiction", search_language="English"):
+    def __init__(self, query, search_category="fiction", search_language="English"):
         self.query = query
-        self.search_type = search_type
         self.search_category = search_category
         self.search_language = search_language
 
@@ -54,23 +53,14 @@ class SearchRequest:
 
     def get_search_page(self):
         query_parsed = self.check_category()
-        if self.search_type.lower() == "title":
-            if self.search_category.lower() == "fiction":
-                search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize()}"
-                )
-                print(search_url)
-            elif self.search_category.lower() == "nonfiction":
-                search_url = (
-                    f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize()}"
-                )
-        elif self.search_type.lower() == "author":
-            if self.search_category.lower() == "fiction":
-                search_url = (
-                    f"https://libgen.is/fiction/?q={query_parsed}&criteria=authors&language={self.search_language.capitalize()}"
-                )
+        if self.search_category.lower() == "fiction":
             search_url = (
-                f"https://libgen.is/search.php?req={query_parsed}&column=author&language={self.search_language.capitalize()}"
+                f"https://libgen.is/fiction/?q={query_parsed}&criteria=title&language={self.search_language.capitalize()}"
+            )
+            print(search_url)
+        elif self.search_category.lower() == "nonfiction":
+            search_url = (
+                f"https://libgen.is/search.php?req={query_parsed}&column=title&language={self.search_language.capitalize()}"
             )
         search_page = requests.get(search_url)
         return search_page
