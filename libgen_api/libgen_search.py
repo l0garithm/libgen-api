@@ -10,7 +10,7 @@ class LibgenSearch:
         self.search_language = search_language.lower()
 
     def search_title(self, query):
-        search_request = SearchRequest(query, search_type="title", search_category=self.search_category, search_language=self.search_language)
+        search_request = SearchRequest(query, search_category=self.search_category, search_language=self.search_language)
         return search_request.aggregate_request_data()
 
     def search_filtered(self, query, filters, exact_match=True):
