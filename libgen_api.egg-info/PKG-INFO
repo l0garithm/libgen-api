@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
-Name: libgen-api
+Name: libgen_api
 Version: 1.0.1
 Summary: Search Library genesis by Title or Author
 Home-page: https://github.com/harrison-broadbent/libgen-api
@@ -49,7 +49,7 @@ Allows you to search Library Genesis by title or author, filter results, and res
 
 ---
 
-Please ⭐ if you find this useful!
+Please â­� if you find this useful!
 
 ---
 
