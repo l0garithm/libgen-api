@@ -4,30 +4,17 @@ from bs4 import BeautifulSoup
 
 MIRROR_SOURCES = ["GET", "Cloudflare", "IPFS.io", "Infura"]
 
-
 class LibgenSearch:
     def __init__(self, search_category="fiction", search_language="english"):
         self.search_category = search_category.lower()
         self.search_language = search_language.lower()
 
     def search_title(self, query):
-        search_request = SearchRequest(query, search_type="title", search_category=self.search_category, search_language=self.search_language)
+        search_request = SearchRequest(query, search_category=self.search_category, search_language=self.search_language)
         return search_request.aggregate_request_data()
 
-    def search_author(self, query):
-        search_request = SearchRequest(query, search_type="author", search_category=self.search_category, search_language=self.search_language)
-        return search_request.aggregate_request_data()
-
-    def search_title_filtered(self, query, filters, exact_match=True):
+    def search_filtered(self, query, filters, exact_match=True):
         search_request = SearchRequest(query, search_type="title", search_category=self.search_category, search_language=self.search_language)
-        results = search_request.aggregate_request_data()
-        filtered_results = filter_results(
-            results=results, filters=filters, exact_match=exact_match
-        )
-        return filtered_results
-
-    def search_author_filtered(self, query, filters, exact_match=True):
-        search_request = SearchRequest(query, search_type="author", search_category=self.search_category, search_language=self.search_language)
         results = search_request.aggregate_request_data()
         filtered_results = filter_results(
             results=results, filters=filters, exact_match=exact_match
@@ -35,8 +22,8 @@ class LibgenSearch:
         return filtered_results
 
     def resolve_download_links(self, item):
-        mirror_1 = item["Mirror_1"]
-        page = requests.get(mirror_1)
+        mirror_1 = item["Mirrors"]
+        page = requests.get(mirror_1[0])
         soup = BeautifulSoup(page.text, "html.parser")
         links = soup.find_all("a", string=MIRROR_SOURCES)
         download_links = {link.string: link["href"] for link in links}
@@ -74,4 +61,5 @@ def filter_results(results, filters, exact_match):
                     break
             if filter_matches_result:
                 filtered_list.append(result)
+    print(filtered_list)
     return filtered_list
