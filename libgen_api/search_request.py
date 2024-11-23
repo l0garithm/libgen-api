@@ -71,7 +71,7 @@ class SearchRequest:
         else:
             return "%20".join(self.query.split(" "))
 
-    def aggregate_request_data(self):
+    async def aggregate_request_data(self):
         search_page = self.get_search_page()
         soup = BeautifulSoup(search_page.text, "lxml")
         self.strip_i_tag_from_soup(soup)
